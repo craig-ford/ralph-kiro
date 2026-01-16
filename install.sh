@@ -132,6 +132,14 @@ RALPH_HOME="$HOME/.ralph"
 exec "$RALPH_HOME/ralph_import.sh" "$@"
 EOF
 
+    # Create ralph-stop command
+    cat > "$INSTALL_DIR/ralph-stop" << 'EOF'
+#!/bin/bash
+# Ralph Stop - Graceful shutdown
+touch .ralph-stop
+echo "Stop signal sent. Ralph will exit after current loop completes."
+EOF
+
     # Copy actual script files to Ralph home with modifications for global operation
     cp "$SCRIPT_DIR/ralph_monitor.sh" "$RALPH_HOME/"
     
@@ -143,6 +151,7 @@ EOF
     chmod +x "$INSTALL_DIR/ralph-monitor" 
     chmod +x "$INSTALL_DIR/ralph-setup"
     chmod +x "$INSTALL_DIR/ralph-import"
+    chmod +x "$INSTALL_DIR/ralph-stop"
     chmod +x "$RALPH_HOME/ralph_monitor.sh"
     chmod +x "$RALPH_HOME/ralph_import.sh"
     chmod +x "$RALPH_HOME/lib/"*.sh

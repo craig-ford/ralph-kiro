@@ -1,16 +1,24 @@
-# Ralph for Claude Code
+# Ralph for Kiro CLI
 
-[![CI](https://github.com/frankbria/ralph-claude-code/actions/workflows/test.yml/badge.svg)](https://github.com/frankbria/ralph-claude-code/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Version](https://img.shields.io/badge/version-0.9.9-blue)
-![Tests](https://img.shields.io/badge/tests-308%20passing-green)
-[![GitHub Issues](https://img.shields.io/github/issues/frankbria/ralph-claude-code)](https://github.com/frankbria/ralph-claude-code/issues)
-[![Mentioned in Awesome Claude Code](https://awesome.re/mentioned-badge.svg)](https://github.com/hesreallyhim/awesome-claude-code)
-[![Follow on X](https://img.shields.io/twitter/follow/FrankBria18044?style=social)](https://x.com/FrankBria18044)
 
-> **Autonomous AI development loop with intelligent exit detection and rate limiting**
+> **Autonomous AI development loop with intelligent exit detection for Kiro CLI**
 
-Ralph is an implementation of the Geoffrey Huntley's technique for Claude Code that enables continuous autonomous development cycles he named after [Ralph Wiggum](https://ghuntley.com/ralph/). It enables continuous autonomous development cycles where Claude Code iteratively improves your project until completion, with built-in safeguards to prevent infinite loops and API overuse.
+Ralph is an implementation of Geoffrey Huntley's [Ralph technique](https://ghuntley.com/ralph/) for autonomous AI development, adapted for [Kiro CLI](https://kiro.dev). It enables continuous development cycles where Kiro iteratively improves your project until completion, with built-in safeguards to prevent infinite loops.
+
+Forked from [ralph-claude-code](https://github.com/frankbria/ralph-claude-code).
+
+## Key Differences from Original
+
+| Feature | Original (Claude Code) | This Fork (Kiro CLI) |
+|---------|------------------------|----------------------|
+| CLI Command | `claude` | `kiro-cli chat --no-interactive --trust-all-tools` |
+| Prompt File | `PROMPT.md` | `.kiro/PROMPT.md` |
+| Task List | `@fix_plan.md` | `.kiro/fix_plan.md` |
+| Rate Limiting | Yes (100/hour) | No (not needed) |
+| Session Continuity | Yes | No |
+| JSON Output Mode | Yes | No |
+| Tool Trust | Configurable | All tools trusted |
 
 **Install once, use everywhere** - Ralph becomes a global command available in any directory.
 
@@ -23,38 +31,28 @@ Ralph is an implementation of the Geoffrey Huntley's technique for Claude Code t
 ### What's Working Now
 - Autonomous development loops with intelligent exit detection
 - **Dual-condition exit gate**: Requires BOTH completion indicators AND explicit EXIT_SIGNAL
-- Rate limiting with hourly reset (100 calls/hour, configurable)
 - Circuit breaker with advanced error detection (prevents runaway loops)
 - Response analyzer with semantic understanding and two-stage error filtering
-- **JSON output format support with automatic fallback to text parsing**
-- **Session continuity with `--continue` flag for context preservation**
-- **Session expiration with configurable timeout (default: 24 hours)**
-- **Modern CLI flags: `--output-format`, `--allowed-tools`, `--no-continue`**
 - Multi-line error matching for accurate stuck loop detection
-- 5-hour API limit handling with user prompts
 - tmux integration for live monitoring
 - PRD import functionality
-- **CI/CD pipeline with GitHub Actions**
 - **Dedicated uninstall script for clean removal**
 - 308 passing tests across 11 test files
 
 ### Recent Improvements
 
 **v0.9.9 - EXIT_SIGNAL Gate & Uninstall Script**
-- Fixed premature exit bug: completion indicators now require Claude's explicit `EXIT_SIGNAL: true`
-- Added dual-condition check preventing exits when Claude reports work in progress
+- Fixed premature exit bug: completion indicators now require Kiro's explicit `EXIT_SIGNAL: true`
+- Added dual-condition check preventing exits when Kiro reports work in progress
 - Added `response_analyzer.sh` fix to respect explicit EXIT_SIGNAL over heuristics
 - Added dedicated `uninstall.sh` script for clean Ralph removal
-- Session expiration with configurable timeout (default: 24 hours)
-- Added 32 new tests for EXIT_SIGNAL behavior and session expiration
+- Added 32 new tests for EXIT_SIGNAL behavior
 - Test count: 308 (up from 276)
 
 **v0.9.8 - Modern CLI for PRD Import**
-- Modernized `ralph_import.sh` to use Claude Code CLI JSON output format
-- JSON output format support with `--output-format json` for structured responses
-- Enhanced error handling with structured JSON error messages
-- Improved file verification with JSON-derived status information
-- Backward compatibility with older CLI versions (automatic text fallback)
+- Modernized `ralph_import.sh` for Kiro CLI
+- Enhanced error handling
+- Improved file verification
 - Added 11 new tests for modern CLI features
 
 **v0.9.7 - Session Lifecycle Management**
@@ -111,21 +109,16 @@ Ralph is an implementation of the Geoffrey Huntley's technique for Claude Code t
 
 ## Features
 
-- **Autonomous Development Loop** - Continuously executes Claude Code with your project requirements
+- **Autonomous Development Loop** - Continuously executes Kiro CLI with your project requirements
 - **Intelligent Exit Detection** - Dual-condition check requiring BOTH completion indicators AND explicit EXIT_SIGNAL
-- **Session Continuity** - Preserves context across loop iterations with automatic session management
-- **Session Expiration** - Configurable timeout (default: 24 hours) with automatic session reset
-- **Rate Limiting** - Built-in API call management with hourly limits and countdown timers
-- **5-Hour API Limit Handling** - Detects Claude's 5-hour usage limit and offers wait/exit options
 - **Live Monitoring** - Real-time dashboard showing loop status, progress, and logs
 - **Task Management** - Structured approach with prioritized task lists and progress tracking
 - **Project Templates** - Quick setup for new projects with best-practice structure
 - **Comprehensive Logging** - Detailed execution logs with timestamps and status tracking
-- **Configurable Timeouts** - Set execution timeout for Claude Code operations (1-120 minutes)
+- **Configurable Timeouts** - Set execution timeout for Kiro operations (1-120 minutes)
 - **Verbose Progress Mode** - Optional detailed progress updates during execution
-- **Response Analyzer** - AI-powered analysis of Claude Code responses with semantic understanding
+- **Response Analyzer** - Analysis of Kiro responses with semantic understanding
 - **Circuit Breaker** - Advanced error detection with two-stage filtering, multi-line error matching, and automatic recovery
-- **CI/CD Integration** - GitHub Actions workflow with automated testing
 - **Clean Uninstall** - Dedicated uninstall script for complete removal
 
 ## Quick Start
@@ -147,12 +140,12 @@ INSTALL ONCE              USE MANY TIMES
 Install Ralph globally on your system:
 
 ```bash
-git clone https://github.com/frankbria/ralph-claude-code.git
-cd ralph-claude-code
+git clone https://github.com/craig-ford/ralph-kiro.git
+cd ralph-kiro
 ./install.sh
 ```
 
-This adds `ralph`, `ralph-monitor`, and `ralph-setup` commands to your PATH.
+This adds `ralph`, `ralph-monitor`, `ralph-setup`, `ralph-stop`, and `ralph-import` commands to your PATH.
 
 > **Note**: You only need to do this once per system. After installation, you can delete the cloned repository if desired.
 
@@ -167,8 +160,8 @@ ralph-import my-requirements.md my-project
 cd my-project
 
 # Review and adjust the generated files:
-# - PROMPT.md (Ralph instructions)
-# - @fix_plan.md (task priorities)
+# - .kiro/PROMPT.md (Ralph instructions)
+# - .kiro/fix_plan.md (task priorities)
 # - specs/requirements.md (technical specs)
 
 # Start autonomous development
@@ -182,9 +175,9 @@ ralph-setup my-awesome-project
 cd my-awesome-project
 
 # Configure your project requirements manually
-# Edit PROMPT.md with your project goals
+# Edit .kiro/PROMPT.md with your project goals
 # Edit specs/ with detailed specifications
-# Edit @fix_plan.md with initial priorities
+# Edit .kiro/fix_plan.md with initial priorities
 
 # Start autonomous development
 ralph --monitor
@@ -212,15 +205,15 @@ To completely remove Ralph from your system:
 ./uninstall.sh
 
 # Or if you deleted the repo, download and run:
-curl -sL https://raw.githubusercontent.com/frankbria/ralph-claude-code/main/uninstall.sh | bash
+curl -sL https://raw.githubusercontent.com/craig-ford/ralph-kiro/main/uninstall.sh | bash
 ```
 
 ## How It Works
 
 Ralph operates on a simple but powerful cycle:
 
-1. **Read Instructions** - Loads `PROMPT.md` with your project requirements
-2. **Execute Claude Code** - Runs Claude Code with current context and priorities
+1. **Read Instructions** - Loads `.kiro/PROMPT.md` with your project requirements
+2. **Execute Kiro** - Runs Kiro CLI with current context and priorities
 3. **Track Progress** - Updates task lists and logs execution results
 4. **Evaluate Completion** - Checks for exit conditions and project completion signals
 5. **Repeat** - Continues until project is complete or limits are reached
@@ -231,13 +224,13 @@ Ralph uses a **dual-condition check** to prevent premature exits during producti
 
 **Exit requires BOTH conditions:**
 1. `completion_indicators >= 2` (heuristic detection from natural language patterns)
-2. Claude's explicit `EXIT_SIGNAL: true` in the RALPH_STATUS block
+2. Kiro's explicit `EXIT_SIGNAL: true` in the RALPH_STATUS block
 
 **Example behavior:**
 ```
-Loop 5: Claude outputs "Phase complete, moving to next feature"
+Loop 5: Kiro outputs "Phase complete, moving to next feature"
         → completion_indicators: 3 (high confidence from patterns)
-        → EXIT_SIGNAL: false (Claude says more work needed)
+        → EXIT_SIGNAL: false (Kiro says more work needed)
         → Result: CONTINUE (respects Claude's explicit intent)
 
 Loop 8: Claude outputs "All tasks complete, project ready"
@@ -247,14 +240,13 @@ Loop 8: Claude outputs "All tasks complete, project ready"
 ```
 
 **Other exit conditions:**
-- All tasks in `@fix_plan.md` marked complete
-- Multiple consecutive "done" signals from Claude Code
+- All tasks in `.kiro/fix_plan.md` marked complete
+- Multiple consecutive "done" signals from Kiro
 - Too many test-focused loops (indicating feature completeness)
-- Claude API 5-hour usage limit reached (with user prompt to wait or exit)
 
 ## Importing Existing Requirements
 
-Ralph can convert existing PRDs, specifications, or requirement documents into the proper Ralph format using Claude Code.
+Ralph can convert existing PRDs, specifications, or requirement documents into the proper Ralph format using Kiro CLI.
 
 ### Supported Formats
 - **Markdown** (.md) - Product requirements, technical specs
@@ -284,8 +276,8 @@ ralph-import design-doc.pdf
 
 Ralph-import creates a complete project with:
 
-- **PROMPT.md** - Converted into Ralph development instructions
-- **@fix_plan.md** - Requirements broken down into prioritized tasks
+- **.kiro/PROMPT.md** - Converted into Ralph development instructions
+- **.kiro/fix_plan.md** - Requirements broken down into prioritized tasks
 - **specs/requirements.md** - Technical specifications extracted from your document
 - **Standard Ralph structure** - All necessary directories and template files
 
@@ -293,48 +285,25 @@ The conversion is intelligent and preserves your original requirements while mak
 
 ### Modern CLI Features (v0.9.8)
 
-Ralph-import uses modern Claude Code CLI features for improved reliability:
-
-- **JSON Output Format**: Structured responses enable precise parsing of conversion results
-- **Automatic Fallback**: Gracefully handles older CLI versions with text-based parsing
-- **Enhanced Error Reporting**: Extracts specific error messages and codes from JSON responses
-- **Session Tracking**: Captures session IDs for potential continuation of interrupted conversions
-
-> **Note**: These features require Claude Code CLI version 2.0.76 or later. Older versions will work with standard text output.
-
 ## Configuration
 
-### Rate Limiting & Circuit Breaker
+### Circuit Breaker
 
-Ralph includes intelligent rate limiting and circuit breaker functionality:
+The circuit breaker prevents runaway loops:
 
 ```bash
-# Default: 100 calls per hour
-ralph --calls 50
+# Check circuit breaker status
+ralph --circuit-status
 
-# With integrated monitoring
-ralph --monitor --calls 50
-
-# Check current usage
-ralph --status
+# Reset the circuit breaker
+ralph --reset-circuit
 ```
 
 The circuit breaker automatically:
-- Detects API errors and rate limit issues with advanced two-stage filtering
-- Opens circuit after 3 loops with no progress or 5 loops with same errors
+- Opens after 3 loops with no progress or 5 loops with same errors
+- Detects stuck loops with multi-line error matching
 - Eliminates false positives from JSON fields containing "error"
-- Accurately detects stuck loops with multi-line error matching
-- Gradually recovers with half-open monitoring state
-- Provides detailed error tracking and logging with state history
-
-### Claude API 5-Hour Limit
-
-When Claude's 5-hour usage limit is reached, Ralph:
-1. Detects the limit error automatically
-2. Prompts you to choose:
-   - **Option 1**: Wait 60 minutes for the limit to reset (with countdown timer)
-   - **Option 2**: Exit gracefully (or auto-exits after 30-second timeout)
-3. Prevents endless retry loops that waste time
+- Provides detailed error tracking and logging
 
 ### Custom Prompts
 
@@ -349,7 +318,7 @@ ralph --monitor --prompt my_custom_instructions.md
 ### Execution Timeouts
 
 ```bash
-# Set Claude Code execution timeout (default: 15 minutes)
+# Set Kiro execution timeout (default: 15 minutes)
 ralph --timeout 30  # 30-minute timeout for complex tasks
 
 # With monitoring and custom timeout
@@ -368,34 +337,6 @@ ralph --verbose
 # Combine with other options
 ralph --monitor --verbose --timeout 30
 ```
-
-### Session Continuity
-
-Ralph maintains session context across loop iterations for improved coherence:
-
-```bash
-# Sessions are enabled by default with --continue flag
-ralph --monitor                 # Uses session continuity
-
-# Start fresh without session context
-ralph --no-continue             # Isolated iterations
-
-# Reset session manually (clears context)
-ralph --reset-session           # Clears current session
-
-# Check session status
-cat .ralph_session              # View current session file
-cat .ralph_session_history      # View session transition history
-```
-
-**Session Auto-Reset Triggers:**
-- Circuit breaker opens (stagnation detected)
-- Manual interrupt (Ctrl+C / SIGINT)
-- Project completion (graceful exit)
-- Manual circuit breaker reset (`--reset-circuit`)
-- Session expiration (default: 24 hours)
-
-Sessions are persisted to `.ralph_session` with a configurable expiration (default: 24 hours). The last 50 session transitions are logged to `.ralph_session_history` for debugging.
 
 ### Exit Thresholds
 
@@ -467,7 +408,7 @@ my-project/
 ## System Requirements
 
 - **Bash 4.0+** - For script execution
-- **Claude Code CLI** - `npm install -g @anthropic-ai/claude-code`
+- **Kiro CLI** - Install from [kiro.dev](https://kiro.dev/docs/cli/installation/)
 - **tmux** - Terminal multiplexer for integrated monitoring (recommended)
 - **jq** - JSON processing for status tracking
 - **Git** - Version control (projects are initialized as git repos)
@@ -566,9 +507,9 @@ tail -f logs/ralph.log
 - **Early Exit** - Review exit thresholds if Ralph stops too soon
 - **Premature Exit** - Check if Claude is setting `EXIT_SIGNAL: false` (Ralph now respects this)
 - **Execution Timeouts** - Increase `--timeout` value for complex operations
-- **Missing Dependencies** - Ensure Claude Code CLI and tmux are installed
+- **Missing Dependencies** - Ensure Kiro CLI and tmux are installed
 - **tmux Session Lost** - Use `tmux list-sessions` and `tmux attach` to reconnect
-- **Session Expired** - Sessions expire after 24 hours by default; use `--reset-session` to start fresh
+- **Session Expired** - Run `ralph` again to start fresh; state is tracked in `.kiro/fix_plan.md`
 
 ## Contributing
 
@@ -634,18 +575,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ```bash
 ralph [OPTIONS]
   -h, --help              Show help message
-  -c, --calls NUM         Set max calls per hour (default: 100)
-  -p, --prompt FILE       Set prompt file (default: PROMPT.md)
+  -p, --prompt FILE       Set prompt file (default: .kiro/PROMPT.md)
   -s, --status            Show current status and exit
   -m, --monitor           Start with tmux session and live monitor
   -v, --verbose           Show detailed progress updates during execution
-  -t, --timeout MIN       Set Claude Code execution timeout in minutes (1-120, default: 15)
-  --output-format FORMAT  Set output format: json (default) or text
-  --allowed-tools TOOLS   Set allowed Claude tools (default: Write,Bash(git *),Read)
-  --no-continue           Disable session continuity (start fresh each loop)
+  -t, --timeout MIN       Set Kiro execution timeout in minutes (1-120, default: 15)
   --reset-circuit         Reset the circuit breaker
   --circuit-status        Show circuit breaker status
-  --reset-session         Reset session state manually
 ```
 
 ### Project Commands (Per Project)
@@ -656,8 +592,7 @@ ralph --monitor              # Start with integrated monitoring
 ralph --status               # Check current loop status
 ralph --verbose              # Enable detailed progress updates
 ralph --timeout 30           # Set 30-minute execution timeout
-ralph --calls 50             # Limit to 50 API calls per hour
-ralph --reset-session        # Reset session state manually
+ralph-stop                   # Graceful shutdown after current loop
 ralph-monitor                # Manual monitoring dashboard
 ```
 
