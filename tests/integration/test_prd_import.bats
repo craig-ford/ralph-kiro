@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 # Integration tests for ralph-import command functionality
-# Tests PRD to Ralph format conversion with mocked Claude Code CLI
+# Tests PRD to Ralph format conversion with mocked Kiro CLI CLI
 
 load '../helpers/test_helper'
 load '../helpers/mocks'
@@ -104,7 +104,7 @@ teardown() {
 create_mock_claude_success() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that creates expected output files
+# Mock Kiro CLI CLI that creates expected output files
 # Read from stdin (conversion prompt)
 cat > /dev/null
 
@@ -244,7 +244,7 @@ cat > specs/requirements.md << 'EOF'
 - Input validation on all endpoints
 EOF
 
-echo "Mock: Claude Code conversion completed successfully"
+echo "Mock: Kiro CLI conversion completed successfully"
 exit 0
 MOCK_CLAUDE_EOF
     chmod +x "$MOCK_BIN_DIR/claude"
@@ -254,8 +254,8 @@ MOCK_CLAUDE_EOF
 create_mock_claude_failure() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_FAIL_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that fails
-echo "Error: Mock Claude Code failed"
+# Mock Kiro CLI CLI that fails
+echo "Error: Mock Kiro CLI failed"
 exit 1
 MOCK_CLAUDE_FAIL_EOF
     chmod +x "$MOCK_BIN_DIR/claude"
@@ -494,7 +494,7 @@ remove_ralph_setup_mock() {
 }
 
 # Test 11: ralph-import conversion failure handling
-@test "ralph-import handles Claude Code conversion failure gracefully" {
+@test "ralph-import handles Kiro CLI conversion failure gracefully" {
     create_sample_prd_md "test-app.md"
 
     # Set up mock to fail
@@ -698,7 +698,7 @@ EOF
 create_mock_claude_json_success() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_JSON_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that outputs JSON format and creates expected files
+# Mock Kiro CLI CLI that outputs JSON format and creates expected files
 # Read from stdin (conversion prompt)
 cat > /dev/null
 
@@ -775,7 +775,7 @@ MOCK_CLAUDE_JSON_EOF
 create_mock_claude_json_partial() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_PARTIAL_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that outputs JSON but only creates some files
+# Mock Kiro CLI CLI that outputs JSON but only creates some files
 cat > /dev/null
 
 # Only create PROMPT.md (missing @fix_plan.md and specs/requirements.md)
@@ -810,7 +810,7 @@ MOCK_CLAUDE_PARTIAL_EOF
 create_mock_claude_json_error() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_JSON_ERROR_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that outputs JSON error response
+# Mock Kiro CLI CLI that outputs JSON error response
 cat > /dev/null
 
 # Output JSON error response
@@ -837,7 +837,7 @@ MOCK_CLAUDE_JSON_ERROR_EOF
 create_mock_claude_text_output() {
     cat > "$MOCK_BIN_DIR/claude" << 'MOCK_CLAUDE_TEXT_EOF'
 #!/bin/bash
-# Mock Claude Code CLI that outputs text (older CLI version)
+# Mock Kiro CLI CLI that outputs text (older CLI version)
 cat > /dev/null
 
 # Create files
@@ -867,7 +867,7 @@ Basic technical requirements.
 EOF
 
 # Output plain text (no JSON)
-echo "Mock: Claude Code conversion completed successfully"
+echo "Mock: Kiro CLI conversion completed successfully"
 echo "Created: PROMPT.md, @fix_plan.md, specs/requirements.md"
 exit 0
 MOCK_CLAUDE_TEXT_EOF

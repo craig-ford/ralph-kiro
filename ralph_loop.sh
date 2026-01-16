@@ -14,7 +14,8 @@ source "$SCRIPT_DIR/lib/circuit_breaker.sh"
 PROMPT_FILE=".kiro/PROMPT.md"
 LOG_DIR="logs"
 STATUS_FILE="status.json"
-KIRO_CMD="kiro-cli chat --no-interactive --trust-all-tools"
+TRUST_ALL_TOOLS=true
+KIRO_AGENT=""
 VERBOSE_PROGRESS=false
 TIMEOUT_MINUTES=15
 SLEEP_DURATION=1
@@ -36,19 +37,23 @@ show_help() {
 Usage: ralph [OPTIONS]
 
 Options:
-  -h, --help           Show this help message
-  -p, --prompt FILE    Set prompt file (default: .kiro/PROMPT.md)
-  -m, --monitor        Start with tmux session and live monitor
-  -v, --verbose        Show detailed progress updates
-  -t, --timeout MIN    Set execution timeout in minutes (1-120, default: 15)
-  -s, --status         Show current status and exit
-  --reset-circuit      Reset the circuit breaker
-  --circuit-status     Show circuit breaker status
+  -h, --help              Show this help message
+  -p, --prompt FILE       Set prompt file (default: .kiro/PROMPT.md)
+  -m, --monitor           Start with tmux session and live monitor
+  -v, --verbose           Show detailed progress updates
+  -t, --timeout MIN       Set execution timeout in minutes (1-120, default: 15)
+  -s, --status            Show current status and exit
+  -tat, --trust-all-tools Trust all Kiro tools without confirmation
+  -a, --agent NAME        Use a specific Kiro agent
+  --reset-circuit         Reset the circuit breaker
+  --circuit-status        Show circuit breaker status
 
 Examples:
-  ralph                    Start autonomous loop
-  ralph --monitor          Start with tmux monitoring
-  ralph --timeout 30       30-minute timeout per loop
+  ralph                        Start autonomous loop
+  ralph --monitor              Start with tmux monitoring
+  ralph -tat                   Trust all tools (use with caution)
+  ralph -a my-agent            Use specific agent
+  ralph --timeout 30           30-minute timeout per loop
 EOF
 }
 
@@ -125,12 +130,18 @@ EOF
 
 run_kiro() {
     local prompt_content="$1"
-    local output_file="$LOG_DIR/claude_output_$(get_file_timestamp).log"
+    local output_file="$LOG_DIR/kiro_output_$(get_file_timestamp).log"
     local timeout_seconds=$((TIMEOUT_MINUTES * 60))
     
-    log_message "INFO" "Starting kiro-cli execution (timeout: ${TIMEOUT_MINUTES}m)"
+    # Build kiro command
+    local kiro_cmd="kiro-cli chat --no-interactive"
+    [[ "$TRUST_ALL_TOOLS" == "true" ]] && kiro_cmd="$kiro_cmd --trust-all-tools"
+    [[ -n "$KIRO_AGENT" ]] && kiro_cmd="$kiro_cmd --agent $KIRO_AGENT"
     
-    if timeout "$timeout_seconds" $KIRO_CMD -p "$prompt_content" > "$output_file" 2>&1; then
+    log_message "INFO" "Starting kiro-cli execution (timeout: ${TIMEOUT_MINUTES}m)"
+    [[ "$VERBOSE_PROGRESS" == "true" ]] && log_message "INFO" "Command: $kiro_cmd"
+    
+    if timeout "$timeout_seconds" $kiro_cmd -p "$prompt_content" > "$output_file" 2>&1; then
         log_message "INFO" "Kiro execution completed successfully"
     else
         local exit_code=$?
@@ -354,6 +365,14 @@ while [[ $# -gt 0 ]]; do
                 echo "Error: Timeout must be 1-120 minutes"
                 exit 1
             fi
+            shift 2
+            ;;
+        -tat|--trust-all-tools)
+            TRUST_ALL_TOOLS=true
+            shift
+            ;;
+        -a|--agent)
+            KIRO_AGENT="$2"
             shift 2
             ;;
         --reset-circuit)

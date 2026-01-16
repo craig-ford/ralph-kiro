@@ -1,4 +1,4 @@
-# Ralph for Claude Code - Implementation Plan
+# Ralph for Kiro CLI - Implementation Plan
 
 **Version**: v0.9.8 | **Tests**: 276 passing (100% pass rate) | **CI/CD**: GitHub Actions
 
@@ -8,7 +8,7 @@
 
 ### Phase 1: CLI Modernization (In Progress)
 
-Phase 1 focuses on modernizing Ralph's CLI integration with Claude Code, including JSON output parsing, session management, and documentation.
+Phase 1 focuses on modernizing Ralph's CLI integration with Kiro CLI, including JSON output parsing, session management, and documentation.
 
 **Status**: Core features complete (1.1-1.4), remaining items are documentation and bug fixes.
 
@@ -190,13 +190,13 @@ Run Ralph in isolated sandbox environments for security and reproducibility.
 | #5 | Bug: date: illegal option -- d on macOS | Closed |
 | #7 | Review codebase for updated Anthropic CLI | Closed |
 | #42 | Windows: Git Bash windows spawn when running Ralph loop | Closed |
-| #55 | --prompt-file flag does not exist in Claude Code CLI | Closed |
+| #55 | --prompt-file flag does not exist in Kiro CLI CLI | Closed |
 
 ### Other Completed
 
 | Issue | Title | Status |
 |-------|-------|--------|
-| #56 | Project featured in Awesome Claude Code! | Closed |
+| #56 | Project featured in Awesome Kiro CLI! | Closed |
 | #63 | Fix IMPLEMENTATION_PLAN | Closed |
 
 </details>

@@ -322,7 +322,7 @@ What needs to happen next?
 **Scenario 1: Successful Retry**
 
 **Given**:
-- Ralph executes Claude Code at loop #5
+- Ralph executes Kiro CLI at loop #5
 - Claude returns "rate_limit_error: please retry"
 - Retry count is 0
 
@@ -331,7 +331,7 @@ What needs to happen next?
 **Then**:
 - Ralph logs "Rate limit detected, attempt 1/3. Waiting 5 minutes..."
 - Ralph sleeps for 300 seconds
-- Ralph retries Claude Code execution
+- Ralph retries Kiro CLI execution
 - If successful: continues normally, resets retry count to 0
 
 **Scenario 2: Persistent Failure**

@@ -10,7 +10,7 @@ Forked from [ralph-claude-code](https://github.com/frankbria/ralph-claude-code).
 
 ## Key Differences from Original
 
-| Feature | Original (Claude Code) | This Fork (Kiro CLI) |
+| Feature | Original (Kiro CLI) | This Fork (Kiro CLI) |
 |---------|------------------------|----------------------|
 | CLI Command | `claude` | `kiro-cli chat --no-interactive --trust-all-tools` |
 | Prompt File | `PROMPT.md` | `.kiro/PROMPT.md` |
@@ -63,7 +63,7 @@ Forked from [ralph-claude-code](https://github.com/frankbria/ralph-claude-code).
 - Added 26 new tests for session continuity features
 
 **v0.9.6 - JSON Output & Session Management**
-- Extended `parse_json_response()` to support Claude Code CLI JSON format
+- Extended `parse_json_response()` to support Kiro CLI CLI JSON format
 - Added session management functions: `store_session_id()`, `get_last_session_id()`, `should_resume_session()`
 - Cross-platform epoch time utilities in date_utils.sh
 - Added 16 new tests covering Claude CLI format and session management
@@ -551,12 +551,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Inspired by the [Ralph technique](https://ghuntley.com/ralph/) created by Geoffrey Huntley
-- Built for [Claude Code](https://claude.ai/code) by Anthropic
+- Built for [Kiro CLI](https://claude.ai/code) by Anthropic
 - Community feedback and contributions
 
 ## Related Projects
 
-- [Claude Code](https://claude.ai/code) - The AI coding assistant that powers Ralph
+- [Kiro CLI](https://claude.ai/code) - The AI coding assistant that powers Ralph
 - [Aider](https://github.com/paul-gauthier/aider) - Original Ralph technique implementation
 
 ---

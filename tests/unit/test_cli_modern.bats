@@ -85,7 +85,7 @@ setup() {
         return 0
     }
 
-    # Build loop context for Claude Code session
+    # Build loop context for Kiro CLI session
     build_loop_context() {
         local loop_count=$1
         local context=""

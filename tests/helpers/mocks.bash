@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Mock Functions for Ralph Test Suite
 
-# Mock Claude Code CLI
+# Mock Kiro CLI CLI
 export MOCK_CLAUDE_SUCCESS=true
-export MOCK_CLAUDE_OUTPUT="Test output from Claude Code"
+export MOCK_CLAUDE_OUTPUT="Test output from Kiro CLI"
 export MOCK_CLAUDE_EXIT_CODE=0
 
 mock_claude_code() {
@@ -11,7 +11,7 @@ mock_claude_code() {
         echo "$MOCK_CLAUDE_OUTPUT"
         return $MOCK_CLAUDE_EXIT_CODE
     else
-        echo "Error: Mock Claude Code failed"
+        echo "Error: Mock Kiro CLI failed"
         return 1
     fi
 }

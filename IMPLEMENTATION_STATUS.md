@@ -185,8 +185,8 @@
 | #42 | Windows: Git Bash windows spawn when running Ralph loop |
 | #48 | MAJOR-01: Enhance shell escaping to prevent command injection |
 | #50 | MAJOR-02: Add input validation for --allowed-tools flag |
-| #55 | --prompt-file flag does not exist in Claude Code CLI |
-| #56 | Project featured in Awesome Claude Code! |
+| #55 | --prompt-file flag does not exist in Kiro CLI CLI |
+| #56 | Project featured in Awesome Kiro CLI! |
 | #63 | Fix IMPLEMENTATION_PLAN |
 
 </details>

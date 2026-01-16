@@ -445,7 +445,7 @@ EOF
 # =============================================================================
 # CLAUDE CODE CLI JSON STRUCTURE TESTS
 # =============================================================================
-# Tests for the modernized Claude Code CLI output format with:
+# Tests for the modernized Kiro CLI CLI output format with:
 # - result: Actual Claude response content
 # - sessionId: Session UUID for continuity
 # - metadata: Structured information about the execution

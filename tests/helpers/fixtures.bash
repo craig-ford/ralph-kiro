@@ -243,7 +243,7 @@ npm run dev
 EOF
 }
 
-# Sample Claude Code Output (Success)
+# Sample Kiro CLI Output (Success)
 create_sample_claude_output_success() {
     local file=${1:-"claude_output.log"}
     cat > "$file" << 'EOF'
@@ -267,7 +267,7 @@ Ready for next task.
 EOF
 }
 
-# Sample Claude Code Output (Error)
+# Sample Kiro CLI Output (Error)
 create_sample_claude_output_error() {
     local file=${1:-"claude_output.log"}
     cat > "$file" << 'EOF'
@@ -282,7 +282,7 @@ Recommendation: Check import paths and ensure dependencies are installed.
 EOF
 }
 
-# Sample Claude Code Output (5-hour limit)
+# Sample Kiro CLI Output (5-hour limit)
 create_sample_claude_output_limit() {
     local file=${1:-"claude_output.log"}
     cat > "$file" << 'EOF'

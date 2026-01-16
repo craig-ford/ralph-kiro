@@ -328,7 +328,7 @@ teardown() {
     [[ "$output" == *"git: command not found"* ]]
 }
 
-@test "function uses Claude Code successfully" {
+@test "function uses Kiro CLI successfully" {
     # Configure successful mock response
     export MOCK_CLAUDE_SUCCESS=true
     export MOCK_CLAUDE_OUTPUT="Task completed"
@@ -450,7 +450,7 @@ Located at `tests/helpers/mocks.bash`, provides mock implementations:
 #### Available Mocks
 
 ```bash
-# Claude Code CLI mock
+# Kiro CLI CLI mock
 mock_claude_code()     # Configurable via MOCK_CLAUDE_* vars
   MOCK_CLAUDE_SUCCESS=true|false
   MOCK_CLAUDE_OUTPUT="response text"

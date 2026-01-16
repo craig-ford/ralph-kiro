@@ -1,4 +1,4 @@
-# Contributing to Ralph for Claude Code
+# Contributing to Ralph for Kiro CLI
 
 Thank you for your interest in contributing to Ralph! This guide will help you get started and ensure your contributions follow our established patterns and quality standards.
 

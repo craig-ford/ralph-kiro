@@ -8,9 +8,9 @@ This is the Ralph for Kiro CLI repository - an autonomous AI development loop sy
 
 **Version**: v0.10.0 | **Tests**: 308 passing (100% pass rate)
 
-## Key Differences from Original (Claude Code)
+## Key Differences from Original (Kiro CLI)
 
-| Feature | Original (Claude Code) | This Fork (Kiro CLI) |
+| Feature | Original (Kiro CLI) | This Fork (Kiro CLI) |
 |---------|------------------------|----------------------|
 | CLI Command | `claude` | `kiro-cli chat --no-interactive --trust-all-tools` |
 | Prompt File | `PROMPT.md` | `.kiro/PROMPT.md` |

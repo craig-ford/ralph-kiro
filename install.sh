@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ralph for Claude Code - Global Installation Script
+# Ralph for Kiro CLI - Global Installation Script
 set -e
 
 # Configuration
@@ -57,8 +57,8 @@ check_dependencies() {
         exit 1
     fi
     
-    # Claude Code CLI will be downloaded automatically when first used
-    log "INFO" "Claude Code CLI (@anthropic-ai/claude-code) will be downloaded when first used."
+    # Kiro CLI CLI will be downloaded automatically when first used
+    log "INFO" "Kiro CLI CLI (@anthropic-ai/claude-code) will be downloaded when first used."
     
     # Check tmux (optional)
     if ! command -v tmux &> /dev/null; then
@@ -93,7 +93,7 @@ install_scripts() {
     # Create the main ralph command
     cat > "$INSTALL_DIR/ralph" << 'EOF'
 #!/bin/bash
-# Ralph for Claude Code - Main Command
+# Ralph for Kiro CLI - Main Command
 
 RALPH_HOME="$HOME/.ralph"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -183,7 +183,7 @@ install_setup() {
     cat > "$RALPH_HOME/setup.sh" << 'EOF'
 #!/bin/bash
 
-# Ralph Project Setup Script - Global Version
+# Ralph Project Setup Script - Global Version (Kiro CLI)
 set -e
 
 PROJECT_NAME=${1:-"my-project"}
@@ -195,27 +195,27 @@ echo "🚀 Setting up Ralph project: $PROJECT_NAME"
 mkdir -p "$PROJECT_NAME"
 cd "$PROJECT_NAME"
 
-# Create structure
-mkdir -p {specs/stdlib,src,examples,logs,docs/generated}
+# Create structure with .kiro directory
+mkdir -p {.kiro,specs/stdlib,src,examples,logs,docs/generated}
 
-# Copy templates from Ralph home
-cp "$RALPH_HOME/templates/PROMPT.md" .
-cp "$RALPH_HOME/templates/fix_plan.md" @fix_plan.md
-cp "$RALPH_HOME/templates/AGENT.md" @AGENT.md
+# Copy templates to .kiro directory
+cp "$RALPH_HOME/templates/PROMPT.md" .kiro/PROMPT.md
+cp "$RALPH_HOME/templates/fix_plan.md" .kiro/fix_plan.md
+cp "$RALPH_HOME/templates/AGENT.md" .kiro/AGENT.md
 cp -r "$RALPH_HOME/templates/specs/"* specs/ 2>/dev/null || true
 
 # Initialize git
-git init
+git init -q
 echo "# $PROJECT_NAME" > README.md
 git add .
-git commit -m "Initial Ralph project setup"
+git commit -q -m "Initial Ralph project setup"
 
 echo "✅ Project $PROJECT_NAME created!"
+echo ""
 echo "Next steps:"
-echo "  1. Edit PROMPT.md with your project requirements"
+echo "  1. Edit .kiro/PROMPT.md with your project requirements"
 echo "  2. Update specs/ with your project specifications"  
 echo "  3. Run: ralph --monitor"
-echo "  4. Monitor: ralph-monitor (if running manually)"
 EOF
 
     chmod +x "$RALPH_HOME/setup.sh"
@@ -242,7 +242,7 @@ check_path() {
 
 # Main installation
 main() {
-    echo "🚀 Installing Ralph for Claude Code globally..."
+    echo "🚀 Installing Ralph for Kiro CLI globally..."
     echo ""
     
     check_dependencies
@@ -253,7 +253,7 @@ main() {
     check_path
     
     echo ""
-    log "SUCCESS" "🎉 Ralph for Claude Code installed successfully!"
+    log "SUCCESS" "🎉 Ralph for Kiro CLI installed successfully!"
     echo ""
     echo "Global commands available:"
     echo "  ralph --monitor          # Start Ralph with integrated monitoring"
@@ -280,13 +280,13 @@ case "${1:-install}" in
         main
         ;;
     uninstall)
-        log "INFO" "Uninstalling Ralph for Claude Code..."
+        log "INFO" "Uninstalling Ralph for Kiro CLI..."
         rm -f "$INSTALL_DIR/ralph" "$INSTALL_DIR/ralph-monitor" "$INSTALL_DIR/ralph-setup" "$INSTALL_DIR/ralph-import"
         rm -rf "$RALPH_HOME"
-        log "SUCCESS" "Ralph for Claude Code uninstalled"
+        log "SUCCESS" "Ralph for Kiro CLI uninstalled"
         ;;
     --help|-h)
-        echo "Ralph for Claude Code Installation"
+        echo "Ralph for Kiro CLI Installation"
         echo ""
         echo "Usage: $0 [install|uninstall]"
         echo ""
